@@ -1,10 +1,11 @@
 # DRAFT - DO NOT USE YET
 
-# MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant
+# MCP23017 multi-I/O Control with Home-Assistant on a Raspberry Pi
+This section will explain how to read and control the MCP23017 from within Home Assistant that is installed (native) on a Raspberry Pi.
 
-# Home-assistant - I2C communication with an MCP23017
+Previous topic: [Step 4: Doing Multi I/O Control with the Raspberry Pi and an MCP23017.](https://github.com/JurgenVanGorp/Step4-MCP23017-multi-IO-control-on-a-Raspberry-Pi-with-I2C)
 
-ASSUMPTIONS
+## ASSUMPTIONS
 * You are using a Raspberry Pi
 * You have Home Assistant installed NATIVE (i.e. not with a Docker Image)
   * Why? because the software shown here communicates directly with the I2C bus
