@@ -1,0 +1,8 @@
+{
+    "domain": "mcp23017relay",
+    "version": "0.9.0",
+    "name": "MCP23017 I/O Expander operating through a separate driver on the Raspberry Pi.",
+    "documentation": "https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant",
+    "requirements": [],
+    "codeowners": ["@jurgenvangorp"]
+  }
