@@ -29,7 +29,7 @@ _LOGGER = logging.getLogger(__name__)
 # purposes (e.g. verbose_level = 3), emails will be sent on critical actions, allowing proper
 # debugging. Do mind that the emails will significantly slow down the operation, so handle with care.
 CONST_EMAIL_SENDER = "my_email_address@mydomain.com"
-CONST_EMAIL_RECEIVER = "your_email_address@yourdomain.com"
+CONST_EMAIL_RECEIVER = ""
 CONST_EMAIL_SMTPSERVER = "uit.telenet.be"
 
 # Communications between Clients and the server happen through a Redis in-memory database
@@ -444,12 +444,13 @@ def sendMyEmail(txtMessage):
     """
     Send an email to an smtp server.
     """
-    mailsender = CONST_EMAIL_SENDER
-    mailrecipient = CONST_EMAIL_RECEIVER
-    smtpserver = CONST_EMAIL_SMTPSERVER
-    msg = "From: " + mailsender + "\r\nTo: " + mailrecipient + "\r\n\r\n"
-    msg = msg + txtMessage
-    server = smtplib.SMTP(smtpserver, 25)
-    server.set_debuglevel(1)
-    server.sendmail(mailsender, mailrecipient, msg)
-    server.close()
+    if CONST_EMAIL_RECEIVER != "":
+        mailsender = CONST_EMAIL_SENDER
+        mailrecipient = CONST_EMAIL_RECEIVER
+        smtpserver = CONST_EMAIL_SMTPSERVER
+        msg = "From: " + mailsender + "\r\nTo: " + mailrecipient + "\r\n\r\n"
+        msg = msg + txtMessage
+        server = smtplib.SMTP(smtpserver, 25)
+        server.set_debuglevel(1)
+        server.sendmail(mailsender, mailrecipient, msg)
+        server.close()

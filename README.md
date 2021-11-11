@@ -41,6 +41,8 @@ It also means that I can switch the lights without HA knowing about it. The buil
 
 ## Installing the client software within Home-Assistant
 
+### Installing the software
+
 Let's start with locating the home directory of your Home-Assistant installation. If you followed the guide in the previous steps, it should be in the /home/homeassistant/.homeassistant. Verify (with ls) if this is the case:
 
 ```
@@ -63,132 +65,104 @@ pi@HA:~ $ sudo find / | grep configuration.yaml
 /home/homeassistant/.homeassistant/configuration.yaml
 ```
 
-Additional home-made libraries should be placed in the HA "custom_components" directory. We will install a new type of (mcp23017) relay in that directory as follows.
+Additional home-made libraries should be placed in the HA "custom_components" directory. We will install a new type of (mcp23017) relay in that directory as follows. As stated earlier, this guide assumes [you installed HA with this guide](https://github.com/JurgenVanGorp/Home-Assistant-on-Raspberry-Pi-Native), so we will need to install under the Home-Assistant credentials.
 
 ```
+sudo -u homeassistant -H -s
+
 cd /home/homeassistant/.homeassistant
 mkdir custom_components
 cd custom_components
 mkdir mcp23017relay
 cd mcp23017relay
+wget -L https://raw.githubusercontent.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/main/custom_components/mcp23017relay/__init__.py
+wget -L https://raw.githubusercontent.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/main/custom_components/mcp23017relay/manifest.json
+wget -L https://raw.githubusercontent.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/main/custom_components/mcp23017relay/switch.py
 
+exit
+sudo reboot
 ```
 
+### A simple switch
 
+At this stage the relay should be available in Home Assistant. 
 
+Let's assume that you have [that looks like this simple example](https://www.raspberrypi-spy.co.uk/2013/07/how-to-use-a-mcp23017-i2c-port-expander-with-the-raspberry-pi-part-1/), i.e. the board is connected with address pins [000] (0x20 on the I2C bus). Pins GPA0, GPA1 and GPA2 are driving three LEDs, and GPA7 is connected to a small push button.
 
-```
-```
-
-
-
-
-```
-```
-
-
-
+The following configuration will use pin GPA2 as a regular light, so let's edit the configuration.yaml file.
 
 ```
+sudo nano /home/homeassistant/.homeassistant/configuration.yaml
 ```
 
+Find the _switch:_ section and add the relay in that section. If the section doesn't exist, just add the line.
 
-
-
-```
-```
-
-
-
-
-```
-```
-
-
-
-
-```
+```python
+switch:
+  - platform: mcp23017relay
+    friendly_name: LED Light
+    name: LED_Light
+    scan_interval: 1
+    output_i2c_address: 0x20
+    output_pin: 2
 ```
 
+Type Ctrl-S to save the file and Ctrl-X to exit.
+
+Log into the Home Assistant GUI. Click [Configuration] and then [Server Controls].
+
+https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_01.png
+
+Click the [Restart] button. Click [OK] when HA asks you if you're sure. Restarting will take a minute.
+
+https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_02.png
+
+When HA has restarted, click [Configuration] again, and then select [Entities] from the list.
+
+https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_03.png
+
+The new LED Light should be visible in the list of Entities. 
+
+https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_04.png
+
+If you installed Home-Assistant native, the "Overview" dashboard should already have picked up the new Switch. If you configured HA yourself, you will need to add the new switch in the lovelace dashboard as 'switch.led_light'.
+
+https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_05.png
 
 
+### A Toggle Relay
 
-```
-```
+In the previous example the input and output of the relay are the same. In this example the "sense" input is different from the "driver" output. I.e. GPA7 is used to sense the 'state' of the light, and GPA0 is used to toggle a teleruptor.
 
+The configuration in configuration.yaml then needs to be set as follows. Remark that the input and output boards can also have different board_id addresses. You could e.g. have an MCP23017 board dedicated to inputs, and another board dedicated to toggle outputs. In this example both boards are the same.
 
-
-
-```
-```
-
-
-
-
-```
-```
-
-
-
-
-```
-```
-
-
-
-
-```
-```
-
-
-
-
-```
-```
-
-
-
-
-```
-```
-
-
-
-
-```
+```python
+switch:
+  - platform: mcp23017relay
+    friendly_name: Toggle Relay 1
+    name: Toggle_Relay_1
+    scan_interval: 1
+    input_i2c_address: 0x20
+    input_pin: 7
+    output_i2c_address: 0x20
+    output_pin: 0
 ```
 
+## Trouble-shooting with email notifications
+
+If the 
 
 
-
+```python
+switch:
+  - platform: mcp23017relay
+    friendly_name: LED Light
+    name: LED_Light
+    scan_interval: 1
+    #verbose_level: 3
+    output_i2c_address: 0x20
+    output_pin: 15
 ```
-```
-
-
-
-
-```
-```
-
-
-
-
-```
-```
-
-
-
-
-```
-```
-
-
-
-
-```
-```
-
-
 
 
 ```
