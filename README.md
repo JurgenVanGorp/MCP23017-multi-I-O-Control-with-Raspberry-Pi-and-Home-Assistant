@@ -111,23 +111,23 @@ Type Ctrl-S to save the file and Ctrl-X to exit.
 
 Log into the Home Assistant GUI. Click [Configuration] and then [Server Controls].
 
-https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_01.png
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_01.png)
 
 Click the [Restart] button. Click [OK] when HA asks you if you're sure. Restarting will take a minute.
 
-https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_02.png
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_02.png)
 
 When HA has restarted, click [Configuration] again, and then select [Entities] from the list.
 
-https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_03.png
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_03.png)
 
 The new LED Light should be visible in the list of Entities. 
 
-https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_04.png
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_04.png)
 
 If you installed Home-Assistant native, the "Overview" dashboard should already have picked up the new Switch. If you configured HA yourself, you will need to add the new switch in the lovelace dashboard as 'switch.led_light'.
 
-https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_05.png
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_05.png_
 
 
 ### A Toggle Relay
@@ -150,7 +150,7 @@ switch:
 
 ## Trouble-shooting with email notifications
 
-If the 
+TBD 
 
 
 ```python
