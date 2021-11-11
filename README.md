@@ -127,7 +127,7 @@ The new LED Light should be visible in the list of Entities.
 
 If you installed Home-Assistant native, the "Overview" dashboard should already have picked up the new Switch. If you configured HA yourself, you will need to add the new switch in the lovelace dashboard as 'switch.led_light'.
 
-![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_05.png_
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_05.png)
 
 
 ### A Toggle Relay
