@@ -148,26 +148,74 @@ switch:
     output_pin: 0
 ```
 
+**ATTENTION** Do mind that the input and output are strictly spoken independent now. 
+* If you push the button on the breadboard, you will see that this is shown in Home Assistant as a "lights on" status. I.e. the button only shows the 'status' of the light, nothing more.
+* If you click the switch in Home Assistant, you will see the LED light blinking for about 0.1 seconds. This output pin would normally be connected to a relay driving a teleruptor. 
+
+I.e. clicking the switch in Home Assistant would 1) toggle the OUTPUT pin on the MCP23017, 2) trigger a relay which in turn briefly toggles a teleruptor, 3) the teleruptor changes state (on --> off, or off --> on), 4) the new state is captured by a sensor, 5) that sensor then shows the state to the INPUT pin of the MCP23017, and finally 6) the new state is shown in Home Assistant.
+
+In the next steps a few schematics and hardware boards are shown that can help you in connecting the inputs and outputs.
+
+If the 0.1 second delay is not long enough for your purpose, edit the mcp23017server.py file as follows.
+
+```
+nano /home/pi/.mcp23017server/mcp23017server.py
+```
+
+In the Constants section look for the entry.
+
+```python
+TOGGLEDELAY = 0.1             # Seconds that the pin will be toggled. Default = 100 msec
+```
+
+The default value is 0.1 seconds, but you can change it to any value of your liking. After saving, don't forget to restart the service, or just reboot the RPi.
+
 ## Trouble-shooting with email notifications
 
-TBD 
+It may be hard to debug Home Assistant if you seem to have connected everything right, but the input and output pins do not show the correct state. The software provides a bit of additional debugging options, by sending you an email for every change it has detected. This can be done per individual switch by adding the verbose_level.
 
+You will first need to enter your email details in the mcp23017relay custom component. First edit the python script with.
+
+```
+sudo nano /home/homeassistant/.homeassistant/custom_components/mcp23017relay/switch.py
+```
+
+Find the following section in the python script and update the values to match your sender and receiver details.
+
+```python
+CONST_EMAIL_SENDER = "my_email_address@mydomain.com"
+CONST_EMAIL_RECEIVER = ""
+CONST_EMAIL_SMTPSERVER = ""
+```
+
+Then edit the configuration.yaml file again.
+
+```
+sudo nano /home/homeassistant/.homeassistant/configuration.yaml
+```
+
+Add a line verbose_level: for the pins that you want to monitor.
 
 ```python
 switch:
   - platform: mcp23017relay
-    friendly_name: LED Light
-    name: LED_Light
+    friendly_name: Toggle Relay 1
+    name: Toggle_Relay_1
     scan_interval: 1
-    #verbose_level: 3
+    verbose_level: 2
+    input_i2c_address: 0x20
+    input_pin: 7
     output_i2c_address: 0x20
-    output_pin: 15
+    output_pin: 0
 ```
 
+**ATTENTION** After making the updates, don't forget to restart HomeAssistant.
 
-```
-```
+After restarting Home Assistant, an email is sent for every change to the switch.
+* verbose_level: 0  --> (default value) Nothing is sent.
+* verbose_level: 1  --> Boot-time ready and error messages.
+* verbose_level: 2  --> Level 1 messages + switch status changes (toggle, on/off, setting a pin as input or output ...)
+* verbose_level: 3  --> Level 2 messages, with a more extensive email describing the switch configuration.
 
 
-
-
+Next topic: [Step 5: Building your hardware: an MCP23017 driven relay board.](https://github.com/JurgenVanGorp/an-mcp23017-driven-relay-board)
