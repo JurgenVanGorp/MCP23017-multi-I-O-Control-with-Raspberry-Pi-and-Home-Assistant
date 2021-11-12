@@ -85,9 +85,9 @@ sudo reboot
 
 ### A simple switch
 
-At this stage the relay should be available in Home Assistant. 
+At this stage the relay should be available in Home Assistant. Let's test that first.
 
-Let's assume that you have [that looks like this simple example](https://www.raspberrypi-spy.co.uk/2013/07/how-to-use-a-mcp23017-i2c-port-expander-with-the-raspberry-pi-part-1/), i.e. the board is connected with address pins [000] (0x20 on the I2C bus). Pins GPA0, GPA1 and GPA2 are driving three LEDs, and GPA7 is connected to a small push button.
+To make things easier you may want to build a small test breadboard setup [that looks like this simple example](https://www.raspberrypi-spy.co.uk/2013/07/how-to-use-a-mcp23017-i2c-port-expander-with-the-raspberry-pi-part-1/), i.e. the board is connected with address pins [000] (0x20 on the I2C bus). Pins GPA0, GPA1 and GPA2 are driving three LEDs, and GPA7 is connected to a small push button.
 
 The following configuration will use pin GPA2 as a regular light, so let's edit the configuration.yaml file.
 
@@ -111,23 +111,23 @@ Type Ctrl-S to save the file and Ctrl-X to exit.
 
 Log into the Home Assistant GUI. Click [Configuration] and then [Server Controls].
 
-![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_01.png)
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/images/HA_config_01.png)
 
 Click the [Restart] button. Click [OK] when HA asks you if you're sure. Restarting will take a minute.
 
-![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_02.png)
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/images/HA_config_02.png)
 
 When HA has restarted, click [Configuration] again, and then select [Entities] from the list.
 
-![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_03.png)
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/images/HA_config_03.png)
 
 The new LED Light should be visible in the list of Entities. 
 
-![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_04.png)
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/images/HA_config_04.png)
 
 If you installed Home-Assistant native, the "Overview" dashboard should already have picked up the new Switch. If you configured HA yourself, you will need to add the new switch in the lovelace dashboard as 'switch.led_light'.
 
-![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/HA_config_05.png)
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/images/HA_config_05.png)
 
 
 ### A Toggle Relay
@@ -148,7 +148,12 @@ switch:
     output_pin: 0
 ```
 
-**ATTENTION** Do mind that the input and output are strictly spoken independent now. 
+This will create another "Toggle Relay" switch in the dashboard, but with a different type of operation.
+
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/images/HA_config_05.png)
+
+
+**ATTENTION** Do mind that the input and output are strictly spoken independent for the Toggle Relay. 
 * If you push the button on the breadboard, you will see that this is shown in Home Assistant as a "lights on" status. I.e. the button only shows the 'status' of the light, nothing more.
 * If you click the switch in Home Assistant, you will see the LED light blinking for about 0.1 seconds. This output pin would normally be connected to a relay driving a teleruptor. 
 
@@ -185,7 +190,7 @@ Find the following section in the python script and update the values to match y
 ```python
 CONST_EMAIL_SENDER = "my_email_address@mydomain.com"
 CONST_EMAIL_RECEIVER = ""
-CONST_EMAIL_SMTPSERVER = ""
+CONST_EMAIL_SMTPSERVER = "uit.telenet.be"
 ```
 
 Then edit the configuration.yaml file again.
@@ -209,7 +214,7 @@ switch:
     output_pin: 0
 ```
 
-**ATTENTION** After making the updates, don't forget to restart HomeAssistant.
+**ATTENTION** After making the updates, don't forget to restart HomeAssistant. You should get your first email already after the restart.
 
 After restarting Home Assistant, an email is sent for every change to the switch.
 * verbose_level: 0  --> (default value) Nothing is sent.
