@@ -218,7 +218,7 @@ switch:
 
 After restarting Home Assistant, an email is sent for every change to the switch.
 * verbose_level: 0  --> (default value) Nothing is sent.
-* verbose_level: 1  --> Boot-time ready and error messages.
+* verbose_level: 1  --> Boot-time ready, and error messages.
 * verbose_level: 2  --> Level 1 messages + switch status changes (toggle, on/off, setting a pin as input or output ...)
 * verbose_level: 3  --> Level 2 messages, with a more extensive email describing the switch configuration.
 
