@@ -150,7 +150,7 @@ switch:
 
 This will create another "Toggle Relay" switch in the dashboard, but with a different type of operation.
 
-![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/images/HA_config_05.png)
+![alt text](https://github.com/JurgenVanGorp/MCP23017-multi-I-O-Control-with-Raspberry-Pi-and-Home-Assistant/blob/main/images/HA_config_06.png)
 
 
 **ATTENTION** Do mind that the input and output are strictly spoken independent for the Toggle Relay. 
